@@ -1,0 +1,55 @@
+#*******************************************************************************
+# Valmor F. de Almeida  dealmeidav@ornl.gov; vfda
+# Thu Nov 19 14:25:00 EST 2015; vfda
+#*******************************************************************************
+#
+#*******************************************************************************
+# Local information
+#*******************************************************************************
+#
+#------------------------------------------------------------------------------*
+# Libraries
+#------------------------------------------------------------------------------*
+#
+FRONTIER_DIR      = /home/dealmeida/mac-fvu/gentoo-home/work/codes/frontier-standalone
+#
+# There should not be a need to change the next 3 lines
+FRONTIER_INCL_DIR = $(FRONTIER_DIR)/include 
+FRONTIER_LIB_DIR  = $(FRONTIER_DIR)/lib/x86_64
+FRONTIER_LIB      = -lFronTier
+# 
+#------------------------------------------------------------------------------*
+# System libraries
+#------------------------------------------------------------------------------*
+#
+MPI_DIR = /usr/local/ompi
+#
+# There should not be a need to change the next 3 lines
+MPI_INCL_DIR = $(MPI_DIR)/include
+MPI_LIB_DIR  = $(MPI_DIR)/lib
+MPI_LIB      = -lmpi 
+#
+PETSC_DIR = /usr/local/petsc
+#
+# There should not be a need to change the next 3 lines
+PETSC_INCL_DIR = $(PETSC_DIR)/include
+PETSC_LIB_DIR  = $(PETSC_DIR)/lib
+PETSC_LIB      = -lHYPRE -lpetsc
+#
+#*******************************************************************************
+# No chages below this line
+#*******************************************************************************
+#
+#------------------------------------------------------------------------------*
+# Includes
+#------------------------------------------------------------------------------*
+#
+SOLV_INCL_DIR = $(SOLV_DIR)/src/include
+#
+#-------------------------------------------------------------------------------
+# Used in makefiles
+#-------------------------------------------------------------------------------
+SOLV_NEED_INCL_DIRS = -I$(SOLV_INCL_DIR) -I$(FRONTIER_INCL_DIR) -I$(PETSC_INCL_DIR) -I$(MPI_INCL_DIR)
+SOLV_NEED_LIB_DIRS  = -L$(PETSC_LIB_DIR) -L$(MPI_LIB_DIR)
+SOLV_NEED_LIBS      = $(PETSC_LIB) $(MPI_LIB) 
+#-------------------------------------------------------------------------------

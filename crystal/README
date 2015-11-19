@@ -34,10 +34,10 @@ Output files for restart:
 
 Running crystal executable under bash shell (examples):
 
- mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-test2d-ccn -o out-test2d-ccn
+ mpirun -np 1 ./crystal.x -d 2 -p 1 1 -i input-2d/in-test2d-ccn -o out-test2d-ccn
 
- mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-diff2d-ccn -o out-diff2d-ccn
+ mpirun -np 1 ./crystal.x -d 2 -p 1 1 -i input-2d/in-diff2d-ccn -o out-diff2d-ccn
 
- mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-dissolution2d -o out-dissolution2d
+ mpirun -np 1 ./crystal.x -d 2 -p 1 1 -i input-2d/in-dissolution2d -o out-dissolution2d
 
- mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-diss2d_rec-ccn-1 -o out-diss2d_rec-ccn-1
+ mpirun -np 1 ./crystal.x -d 2 -p 1 1 -i input-2d/in-diss2d_rec-ccn-1 -o out-diss2d_rec-ccn-1

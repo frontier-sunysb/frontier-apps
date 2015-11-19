@@ -1,0 +1,75 @@
+#*******************************************************************************
+# Valmor F. de Almeida  dealmeidav@ornl.gov; vfda
+# Thu Nov 19 14:25:00 EST 2015; vfda
+#*******************************************************************************
+#
+#*******************************************************************************
+# Local information
+#*******************************************************************************
+#
+#------------------------------------------------------------------------------*
+# Libraries
+#------------------------------------------------------------------------------*
+# 
+FRONTIER_DIR      = /home/dealmeida/mac-fvu/gentoo-home/work/codes/frontier-standalone
+#
+# There should not be a need to change the next 3 lines
+FRONTIER_INCL_DIR = $(FRONTIER_DIR)/include 
+FRONTIER_LIB_DIR  = $(FRONTIER_DIR)/lib/x86_64
+FRONTIER_LIB      = -lFronTier
+#
+SOLVER_DIR      = /home/dealmeida/mac-fvu/gentoo-home/work/codes/frontier-apps/solver
+#
+# There should not be a need to change the next 3 lines
+SOLVER_INCL_DIR = $(SOLVER_DIR)/src/include
+SOLVER_LIB_DIR  = $(SOLVER_DIR)/lib
+SOLVER_LIB      = -lsolver
+#
+#------------------------------------------------------------------------------*
+# System libraries
+#------------------------------------------------------------------------------*
+#
+PETSC_DIR = /usr/local/petsc
+#
+# There should not be a need to change the next 3 lines
+PETSC_INCL_DIR = /usr/local/petsc/include
+PETSC_LIB_DIR  = /usr/local/petsc/lib
+PETSC_LIB      = -lpetsc
+#
+MPI_DIR = /usr/local/ompi
+#
+# There should not be a need to change the next 3 lines
+MPI_INCL_DIR = /usr/local/ompi/include
+MPI_LIB_DIR  = /usr/local/ompi/lib
+MPI_LIB      = -lmpi 
+#
+HDF_DIR = /usr/local/hdf4
+#
+# There should not be a need to change the next 3 lines
+HDF_INCL_DIR = $(HDF_DIR)/include
+HDF_LIB_DIR  = $(HDF_DIR)/lib
+HDF_LIB      = -lmfhdf -ldf -ljpeg -lz
+#
+GD_DIR = /usr
+#
+# There should not be a need to change the next 3 lines
+GD_INCL_DIR = $(GD_DIR)/include
+GD_LIB_DIR  = $(GD_DIR)/lib64
+GD_LIB      = -lgd
+#
+#*******************************************************************************
+# No chages below this line
+#*******************************************************************************
+#
+#------------------------------------------------------------------------------*
+# Includes
+#------------------------------------------------------------------------------*
+XTAL_INCL_DIR = $(XTAL_DIR)/src/include
+#
+#-------------------------------------------------------------------------------
+# Used in makefiles
+#-------------------------------------------------------------------------------
+XTAL_NEED_INCL_DIRS = -I$(XTAL_INCL_DIR) -I$(FRONTIER_INCL_DIR) -I$(SOLVER_INCL_DIR) -I$(PETSC_INCL_DIR) -I$(MPI_INCL_DIR) -I$(HDF_INCL_DIR) -I$(GD_INCL_DIR)
+XTAL_NEED_LIB_DIRS  = -L$(FRONTIER_LIB_DIR) -L$(SOLVER_LIB_DIR) -L$(PETSC_LIB_DIR) -L$(HDF_LIB_DIR) -L$(GD_LIB_DIR)
+XTAL_NEED_LIBS      = $(FRONTIER_LIB) $(SOLVER_LIB) $(PETSC_LIB) $(HDF_LIB) $(GD_LIB)
+#-------------------------------------------------------------------------------

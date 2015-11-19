@@ -1,53 +1,82 @@
-CXX=mpicxx 
-F77=mpif77 
-F77_LIBS=
-
-libext = 
-incs =   -I../../frontier -I../../frontier/src/util   -I/usr/local/ompi/include -D__MPI__   -DHAS_FENV    -D__GD__ -I/usr/lib64/include  -D__HYPRE__  
-libincs =  -L/usr/lib64/lib  -L/usr/local/ompi/lib  -L/usr/local/petsc/lib -L/usr/local/hdf4/lib
-libs = -lgd   -lmpi -lpthread -lmfhdf -ldf  -ljpeg -lz
-build_cpu = x86_64
-incsloc = -I. -I../solver -I../../frontier/include
-
-PETSC = yes
-PETSC_ARCH=
-PETSC_DIR=
-
-Petsc_Include= -I/usr/local/petsc/include
-Petsc_Lib= -lHYPRE -lpetsc
-crystal : 
-
-solver.o : ../solver/solver.h ../solver/solver.cpp
-	${CXX} -c ../solver/solver.cpp $(incsloc) $(incs) ${Petsc_Include}
-
-parab.o : ../solver/solver.h ../solver/parab.cpp
-	${CXX} -c ../solver/parab.cpp $(incsloc) $(incs) ${Petsc_Include}
-
-ccartsn.o : crystal.h ../solver/solver.h ccartsn.cpp
-	${CXX} -c ccartsn.cpp $(incsloc) $(incs) ${Petsc_Include}
-
-crysub.o : crystal.h ../solver/solver.h crysub.cpp
-	${CXX} -c crysub.cpp $(incsloc) $(incs) ${Petsc_Include}
-
-crystal: crystal.h crystal_state.h crystal.cpp solver.o parab.o ccartsn.o crysub.o
-	${CXX} -c crystal.cpp -I../../frontier/include $(incs) ${Petsc_Include}
-	$(CXX) -o crystal crystal.o -I../../frontier/include -L../../frontier/lib/${build_cpu} solver.o parab.o ccartsn.o crysub.o -L../../frontier/lib/${build_cpu} -lFronTier $(libincs) $(libs) ${Petsc_Lib} ${F77_LIBS}
-
--include ../../frontier/devel-deps.inc
-
-clean:
-	rm -rf *.o crystal 
-output :
-	rm -rf out/*
-distclean:
-	rm -rf *.o crystal out/*
-cleanall:
-	rm -rf *.o crystal out/*
-gif :
-	hdf2gif out/intfc.hdf out/intfc.gif
-TagsFile:
-	ctags *.h *.cpp ../solver/solver.h ../solver/solver.cpp ../solver/parab.cpp ../src/front/*.[ch] ../src/intfc/*.[ch] ../src/util/*.[ch]
-tagsfile:
-	ctags *.h *.cpp ../solver/solver.h ../solver/solver.cpp ../solver/parab.cpp ../src/front/*.[ch] ../src/intfc/*.[ch] ../src/util/*.[ch]
-etagsfile:
-	etags *.h *.cpp ../solver/solver.h ../solver/solver.cpp ../solver/parab.cpp ../src/front/*.[ch] ../src/intfc/*.[ch] ../src/util/*.[ch]
+#*******************************************************************************
+# Valmor de Almeida  dealmeidav@ornl.gov; vfda
+# Thu Nov 19 15:07:55 EST 2015; vfda
+#*******************************************************************************
+#
+# There should be no need to change this file
+# Don't change unless you know what you are doing
+#
+XTAL_DIR = .
+#
+#*******************************************************************************
+# Compiler flags and libraries
+#*******************************************************************************
+#
+include options
+include local
+#
+#
+#***********************************************************************
+#           Form executables
+#***********************************************************************
+#
+#----------------------------------------------------------------------*
+# Interpreter component
+#----------------------------------------------------------------------*
+#
+ xtalSrcDir := src
+#
+ xtalSrcFiles     := $(foreach dir,$(xtalSrcDir),$(wildcard $(dir)/*.cpp))
+ xtalSrcFileNames := $(notdir $(xtalSrcFiles))
+ xtalObj          := $(addprefix obj/, $(subst .cpp,.o,$(xtalSrcFileNames)))
+ xtalHeadFiles    := $(wildcard src/include/*.h)
+#
+#----------------------------------------------------------------------*
+# Targets
+#----------------------------------------------------------------------*
+#
+ crystal : $(xtalObj)
+	$(CC) -o crystal.x $(XTAL_NEED_LIB_DIRS) $(CCFLAGS) $(xtalObj) $(XTAL_NEED_LIBS) $(CCLIBS)
+#
+#----------------------------------------------------------------------*
+# Dependencies
+#----------------------------------------------------------------------*
+#
+ $(xtalObj) : $(xtalHeadFiles)
+#
+#----------------------------------------------------------------------*
+#
+ VPATH = src/ \
+         src/include
+#
+ obj/%.o : %.cpp
+	$(CC) $(XTAL_NEED_INCL_DIRS) $(CCFLAGS) -c $<
+	@ mv $(notdir $@) obj/.
+#
+#***********************************************************************
+#           Cleaning targets
+#***********************************************************************
+#
+ clean:
+#
+	@echo  !!!!!!!!!!!!!!!!!!!
+	@echo  !!! CLEANING XTAL!!
+	@echo  !!!!!!!!!!!!!!!!!!!
+	@/bin/rm -f obj/*.o
+	@/bin/rm -f *.x
+	@echo  !!!!!!!!!!!!
+	@echo  !!! DONE !!!
+	@echo  !!!!!!!!!!!!
+ debug:
+	@echo " "
+	@echo "xtalSrcFiles = "
+	@echo $(xtalSrcFiles)
+	@echo " "
+	@echo "xtalSrcFileNames = "
+	@echo $(xtalSrcFileNames)
+	@echo " "
+	@echo "xtalObj = "
+	@echo $(xtalObj)
+	@echo " "
+	@echo "xtalHeadFiles = "
+	@echo $(xtalHeadFiles)
