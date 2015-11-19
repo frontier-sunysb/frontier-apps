@@ -1,0 +1,43 @@
+
+The crystal code is a FronTier application. In order to compile this
+program, one needs mpi library (mpich or openmpi), PETSc library which
+can be downloaded at:
+
+http://www.mcs.anl.gov/petsc/petsc-as/
+
+Other OPTIONAL accompanying packages include HDF4:
+
+http://www.hdfgroup.org/products/hdf4/
+
+and GD:
+
+http://www.libgd.org/Main_Page
+
+The configure line for compiling crystal under FronTier is:
+
+configure --with-openmpi=(mpi-dir) --with-petsc=(petsc-dir) --with-devel [--with-hdf=(hdf-dir)] [--with-gd=(gd-dir)]
+
+Compile FronTier library under FronTier first, and then:
+
+cd crystal
+make
+
+to make the crystal excutable.
+
+Need xgraph for xg files plotting.
+Need hdf4 is needed not hdf5.
+
+Output files for restart:
+   intfc-tsxxxxxx
+   state.tsxxxxxx
+
+
+Running crystal executable under bash shell (examples):
+
+ mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-test2d-ccn -o out-test2d-ccn
+
+ mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-diff2d-ccn -o out-diff2d-ccn
+
+ mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-dissolution2d -o out-dissolution2d
+
+ mpirun -np 1 ./crystal -d 2 -p 1 1 -i input-2d/in-diss2d_rec-ccn-1 -o out-diss2d_rec-ccn-1
